@@ -24,11 +24,20 @@ func main() {
 	barberCapacity := barberShift * 1             // количество клиентов (1) за час работы барбера
 	trimRequest := 1                              // сред. количество посещений в месяц одного мужчины
 	clientCapacity := popMen / (30 / trimRequest) // ежедневный поток мужчин на стрижку (среднемесячный)
+
+	if popMen%(30/trimRequest) > 0 {
+		clientCapacity += 1
+	} //если получилось число с точкой, то увеличиваем поток на 1
+
 	barberNeed := clientCapacity / barberCapacity // количество необходимых барберов в городе
+
+	if clientCapacity%barberCapacity > 0 {
+		barberNeed += 1
+	} // если число с точкой, то увеличиваем количество нужных барберов на 1
 
 	if barberNeed*barberCapacity*30 < popMen {
 		barberNeed++
-	} // проверка, сколько клиентов будет обслужено за месяц (из-за дробных чисел), если меньше полоенного, то +1 барбер
+	} // проверка, сколько клиентов будет обслужено за месяц (из-за дробных чисел), если меньше положенного, то +1 барбер
 
 	fmt.Println("Необходимое число барберов:", barberNeed)
 
@@ -37,7 +46,7 @@ func main() {
 	} else if barbers == barberNeed {
 		fmt.Println("В городе ровно столько барберов, сколько требуется!")
 	} else {
-		fmt.Println("Чтобы покрыть спрос, нужно еще нанять:", barberNeed-barbers, "барберов")
+		fmt.Println("Чтобы покрыть спрос, нужно нанять:", barberNeed-barbers, "барберов")
 	}
 
 }
