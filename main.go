@@ -26,7 +26,7 @@ func main() {
 	clientCapacity := popMen / (30 / trimRequest) // ежедневный поток мужчин на стрижку (среднемесячный)
 	barberNeed := clientCapacity / barberCapacity // количество необходимых барберов в городе
 
-	if barberNeed*30 < popMen {
+	if barberNeed*barberCapacity*30 < popMen {
 		barberNeed++
 	} // проверка, сколько клиентов будет обслужено за месяц (из-за дробных чисел), если меньше полоенного, то +1 барбер
 
